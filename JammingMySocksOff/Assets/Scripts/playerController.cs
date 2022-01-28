@@ -13,15 +13,14 @@ public class playerController : MonoBehaviour
     private float moveInput;
     private Animator animator;
     private Rigidbody2D rb;
-    private bool grounded;
-    private bool moving;
-    private bool lookingLeft;
+    private bool grounded, moving, lookingLeft,inverted;
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        Shader.SetGlobalFloat("_InvertColors", 0);
     }
 
     // Update is called once per frame
@@ -30,6 +29,20 @@ public class playerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space)&&grounded)
         {
             rb.AddForce(new Vector2(0,jumpHeight));
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (!inverted)
+            {
+                Shader.SetGlobalFloat("_InvertColors", 1);
+                inverted = true;
+            }
+            else
+            {
+                Shader.SetGlobalFloat("_InvertColors", 0);
+                inverted = false;
+            }
         }
     }
 
@@ -55,7 +68,6 @@ public class playerController : MonoBehaviour
         {
             animator.SetFloat("Xvelocity", rb.velocity.x);
         }
-
         
         animator.SetBool("Jump", !grounded);
         animator.SetBool("Grounded",grounded);
