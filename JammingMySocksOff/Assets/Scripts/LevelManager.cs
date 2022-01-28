@@ -8,7 +8,6 @@ using UnityEngine.Tilemaps;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] private int scoreLossPerSecond;
     private GameObject normalGround;
     private GameObject inverseGround;
     private GameObject ground;
@@ -16,14 +15,16 @@ public class LevelManager : MonoBehaviour
     private GameObject endLevelUI;
     private static string levelPrefix="Level_";
     private float timer;
-    private int score=200;
+    private int score;
 
     // Start is called before the first frame update
     void Start()
     {
         ground=GameObject.Find("Ground");
         levelUI = GameObject.Find("InGameUI");
+        levelUI.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Score: " + score;
         endLevelUI = GameObject.Find("EndLevelUI");
+        endLevelUI.SetActive(false);
         inverseGround = ground.transform.GetChild(1).gameObject;
         normalGround = ground.transform.GetChild(2).gameObject;
     }
@@ -32,7 +33,6 @@ public class LevelManager : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        levelUI.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Score: " + score;
         levelUI.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Time: " + Mathf.RoundToInt(timer);
     }
 
@@ -46,29 +46,44 @@ public class LevelManager : MonoBehaviour
 
     public void CompleteLevel()
     {
-        LoadNextLevel();
+        Time.timeScale = 0;
+        endLevelUI.SetActive(true);
+        levelUI.SetActive(false);
+
+        double multiplier = Math.Round((double)30 / Mathf.RoundToInt(timer), 1);
+        if (multiplier<1)
+        {
+            multiplier = 1;
+        }
+        
+        endLevelUI.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "Score: " + score;
+        endLevelUI.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = "Time Multiplier: " +multiplier;
+        endLevelUI.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = "Total Score: " + (Mathf.RoundToInt(score * (float)multiplier)).ToString();
     }
 
     public void LoadNextLevel()
     {
-        //(Mathf.RoundToInt(score-(scoreLossPerSecond*timer))).ToString()
         string currentName = SceneManager.GetActiveScene().name;
         int currentLevel = Int32.Parse(currentName.Remove(0,6));
         SceneManager.LoadScene(levelPrefix+(currentLevel+1));
+        Time.timeScale = 1;
     }
 
     public void LoadSpecificLevel(string sceneName)
     {
-
+        SceneManager.LoadScene("MainMenu");
+        Time.timeScale = 1;
     }
 
     public void AddScore(int gain)
     {
         score += gain;
+        levelUI.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Score: " + score;
     }
 
     public void LowerScore(int loss)
     {
         score -= loss;
+        levelUI.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Score: " + score;
     }
 }
