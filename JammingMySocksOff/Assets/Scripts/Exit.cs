@@ -9,13 +9,22 @@ public class Exit : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        if (opened)
+        {
+            GetComponent<Animator>().SetBool("IsOpen",opened);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void OpenExit()
+    {
+        opened = true;
+        GetComponent<Animator>().SetBool("IsOpen", opened);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
