@@ -6,6 +6,7 @@ public class playerController : MonoBehaviour
 {
     [SerializeField] private int jumpHeight;
     [SerializeField] private int movementSpeed;
+    [SerializeField] private float jumpTime;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundCheckRange;
     [SerializeField] private LayerMask groundLayer;
@@ -15,6 +16,7 @@ public class playerController : MonoBehaviour
     private Rigidbody2D rb;
     private bool grounded, moving, lookingLeft,inverted;
     private Color backGroundColor,invertedBackgroundColor;
+    private float timer;
 
     // Start is called before the first frame update
     void Start()
@@ -24,15 +26,24 @@ public class playerController : MonoBehaviour
         Shader.SetGlobalFloat("_InvertColors", 0);
         backGroundColor=Camera.main.backgroundColor;
         invertedBackgroundColor = new Color(1-backGroundColor.r, 1-backGroundColor.g, 1-backGroundColor.b, backGroundColor.a);
-        Debug.Log(invertedBackgroundColor);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)&&grounded)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            rb.AddForce(new Vector2(0,jumpHeight));
+            if (grounded)
+            {
+                rb.AddForce(new Vector2(0, jumpHeight));
+                timer = 0;
+            }
+            /*else if (!grounded && timer<jumpTime)
+            {
+                Debug.Log("Reached");
+                timer += Time.deltaTime;
+                rb.AddForce(new Vector2(0, jumpHeight/1000));
+            }*/
         }
 
         if (Input.GetKeyDown(KeyCode.E))
@@ -42,12 +53,14 @@ public class playerController : MonoBehaviour
                 Shader.SetGlobalFloat("_InvertColors", 1);
                 Camera.main.backgroundColor = invertedBackgroundColor;
                 inverted = true;
+                GameManager.Instance.levelManager.SwitchInversion(inverted);
             }
             else
             {
                 Shader.SetGlobalFloat("_InvertColors", 0);
                 Camera.main.backgroundColor = backGroundColor;
                 inverted = false;
+                GameManager.Instance.levelManager.SwitchInversion(inverted);
             }
         }
     }
