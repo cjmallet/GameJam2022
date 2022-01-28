@@ -7,13 +7,14 @@ public class playerController : MonoBehaviour
     [SerializeField] private int jumpHeight;
     [SerializeField] private int movementSpeed;
     [SerializeField] private Transform groundCheck;
-    [SerializeField] private float groundCheckRange,groundPredictRange;
+    [SerializeField] private float groundCheckRange;
     [SerializeField] private LayerMask groundLayer;
 
     private float moveInput;
     private Animator animator;
     private Rigidbody2D rb;
     private bool grounded, moving, lookingLeft,inverted;
+    private Color backGroundColor,invertedBackgroundColor;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +22,8 @@ public class playerController : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         Shader.SetGlobalFloat("_InvertColors", 0);
+        backGroundColor=Camera.main.backgroundColor;
+        invertedBackgroundColor = new Color(255 * (1 - backGroundColor.r), 255 * (1 - backGroundColor.g), 255 * (1 - backGroundColor.b), backGroundColor.a);
     }
 
     // Update is called once per frame
@@ -36,11 +39,13 @@ public class playerController : MonoBehaviour
             if (!inverted)
             {
                 Shader.SetGlobalFloat("_InvertColors", 1);
+                Camera.main.backgroundColor = Color.Lerp(backGroundColor,invertedBackgroundColor,20f);
                 inverted = true;
             }
             else
             {
                 Shader.SetGlobalFloat("_InvertColors", 0);
+                Camera.main.backgroundColor = Color.Lerp(invertedBackgroundColor, backGroundColor, 20f);
                 inverted = false;
             }
         }
