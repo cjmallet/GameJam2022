@@ -23,7 +23,8 @@ public class playerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         Shader.SetGlobalFloat("_InvertColors", 0);
         backGroundColor=Camera.main.backgroundColor;
-        invertedBackgroundColor = new Color(255 * (1 - backGroundColor.r), 255 * (1 - backGroundColor.g), 255 * (1 - backGroundColor.b), backGroundColor.a);
+        invertedBackgroundColor = new Color(1-backGroundColor.r, 1-backGroundColor.g, 1-backGroundColor.b, backGroundColor.a);
+        Debug.Log(invertedBackgroundColor);
     }
 
     // Update is called once per frame
@@ -39,13 +40,13 @@ public class playerController : MonoBehaviour
             if (!inverted)
             {
                 Shader.SetGlobalFloat("_InvertColors", 1);
-                Camera.main.backgroundColor = Color.Lerp(backGroundColor,invertedBackgroundColor,20f);
+                Camera.main.backgroundColor = invertedBackgroundColor;
                 inverted = true;
             }
             else
             {
                 Shader.SetGlobalFloat("_InvertColors", 0);
-                Camera.main.backgroundColor = Color.Lerp(invertedBackgroundColor, backGroundColor, 20f);
+                Camera.main.backgroundColor = backGroundColor;
                 inverted = false;
             }
         }
