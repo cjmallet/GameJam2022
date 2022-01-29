@@ -2077,6 +2077,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ground
       objectReference: {fileID: 0}
+    - target: {fileID: 2518573975223717784, guid: c836413e9a475bf4480c8194703fdc5c, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2518573975241909904, guid: c836413e9a475bf4480c8194703fdc5c, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 2518573975241909904, guid: c836413e9a475bf4480c8194703fdc5c, type: 3}
       propertyPath: m_IsActive
       value: 1

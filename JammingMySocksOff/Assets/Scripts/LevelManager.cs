@@ -41,6 +41,7 @@ public class LevelManager : MonoBehaviour
         nameUI.SetActive(false);
         inverseGround = ground.transform.GetChild(1).gameObject;
         normalGround = ground.transform.GetChild(2).gameObject;
+        SwitchInversion(false);
 
         //System.IO.File.Delete(Application.persistentDataPath + "/" + SceneManager.GetActiveScene().name + ".json");
         if (System.IO.File.Exists(Application.persistentDataPath + "/" + SceneManager.GetActiveScene().name + ".json"))
