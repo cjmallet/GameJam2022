@@ -8,6 +8,8 @@ using UnityEngine.Tilemaps;
 
 public class LevelManager : MonoBehaviour
 {
+    [SerializeField] private int maxModifier;
+
     private GameObject normalGround;
     private GameObject inverseGround;
     private GameObject ground;
@@ -27,6 +29,8 @@ public class LevelManager : MonoBehaviour
         endLevelUI.SetActive(false);
         inverseGround = ground.transform.GetChild(1).gameObject;
         normalGround = ground.transform.GetChild(2).gameObject;
+        score = 0;
+        timer = 0;
     }
 
     // Update is called once per frame
@@ -50,7 +54,7 @@ public class LevelManager : MonoBehaviour
         endLevelUI.SetActive(true);
         levelUI.SetActive(false);
 
-        double multiplier = Math.Round((double)30 / Mathf.RoundToInt(timer), 1);
+        double multiplier = Math.Round((double)maxModifier / Mathf.RoundToInt(timer), 1);
         if (multiplier<1)
         {
             multiplier = 1;
@@ -85,5 +89,10 @@ public class LevelManager : MonoBehaviour
     {
         score -= loss;
         levelUI.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Score: " + score;
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
