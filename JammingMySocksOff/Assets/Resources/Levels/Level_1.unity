@@ -20292,10 +20292,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5933599943161729648, guid: 27fe2037332788c4ea841aa994034ca6, type: 3}
-      propertyPath: startInverted
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5933599943161729649, guid: 27fe2037332788c4ea841aa994034ca6, type: 3}
       propertyPath: m_Name
       value: GoldBolt

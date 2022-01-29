@@ -5,10 +5,13 @@ using UnityEngine;
 public class Bolt : Pickups
 {
     [SerializeField] private int scoreBonus;
+    [SerializeField] private AudioClip[] audioClips;
+    private AudioSource collectionSound;
 
     // Start is called before the first frame update
     void Start()
     {
+        collectionSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -24,7 +27,22 @@ public class Bolt : Pickups
         if (collision.transform.tag == "Player")
         {
             GameManager.Instance.levelManager.AddScore(scoreBonus);
-            Destroy(transform.gameObject);
+            StartCoroutine("StartCollection");
         }
+    }
+
+    private IEnumerator StartCollection()
+    {
+        if (GetComponent<ParticleSystem>()!=null)
+        {
+            GetComponent<ParticleSystem>().Stop();
+        }
+        GetComponent<BoxCollider2D>().enabled=false;
+        GetComponent<SpriteRenderer>().enabled = false;
+        GameManager.Instance.levelManager.AddScore(scoreBonus);
+        collectionSound.clip = audioClips[Random.Range(0,3)];
+        collectionSound.Play();
+        yield return new WaitForSeconds(collectionSound.clip.length);
+        Destroy(transform.gameObject);
     }
 }
