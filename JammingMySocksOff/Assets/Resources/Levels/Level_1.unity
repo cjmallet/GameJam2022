@@ -20183,10 +20183,34 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1089176758}
+    - target: {fileID: 1798052385717168966, guid: d103cad683d5383489e0a7999ed54d4a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1089176758}
+    - target: {fileID: 1798052385717168966, guid: d103cad683d5383489e0a7999ed54d4a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadSpecificLevel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1798052385717168966, guid: d103cad683d5383489e0a7999ed54d4a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SaveHighscore
+      objectReference: {fileID: 0}
     - target: {fileID: 1810491866936595636, guid: d103cad683d5383489e0a7999ed54d4a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1089176758}
+    - target: {fileID: 1810491866936595636, guid: d103cad683d5383489e0a7999ed54d4a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1089176758}
+    - target: {fileID: 1810491866936595636, guid: d103cad683d5383489e0a7999ed54d4a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadNextLevel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1810491866936595636, guid: d103cad683d5383489e0a7999ed54d4a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SaveHighscore
+      objectReference: {fileID: 0}
     - target: {fileID: 2684524295425850454, guid: d103cad683d5383489e0a7999ed54d4a, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -20278,10 +20302,6 @@ PrefabInstance:
     - target: {fileID: 2684524295425850458, guid: d103cad683d5383489e0a7999ed54d4a, type: 3}
       propertyPath: m_Name
       value: LevelUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 2684524295597327100, guid: d103cad683d5383489e0a7999ed54d4a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d103cad683d5383489e0a7999ed54d4a, type: 3}
@@ -20396,10 +20416,6 @@ PrefabInstance:
     - target: {fileID: 8626594370983082719, guid: 4c42a5716a4895d48a1c59a9190ca116, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8626594371121366991, guid: 4c42a5716a4895d48a1c59a9190ca116, type: 3}
-      propertyPath: maxModifier
-      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c42a5716a4895d48a1c59a9190ca116, type: 3}

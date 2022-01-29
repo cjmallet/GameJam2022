@@ -1,0 +1,50 @@
+{
+"level": "Level_1",
+      "allHighScores": [
+        {
+          "position": "1",
+          "highScore": "100",
+          "name": "Daan"
+        },
+        {
+          "position": "2",
+          "highScore": "90",
+          "name": "Chris"
+        },
+        {
+          "position": "3",
+          "highScore": "80",
+          "name": "Chris"
+        },
+        {
+          "position": "4",
+          "highScore": "70",
+          "name": "Chris"
+        },
+        {
+          "position": "5",
+          "highScore": "60",
+          "name": "Chris"
+        },
+        {
+          "position": "6",
+          "highScore": "50",
+          "name": "Chris"
+        },
+        {
+          "position": "7",
+          "highScore": "40",
+          "name": "Chris"
+        },
+        {
+          "position": "8",
+          "highScore": "30",
+          "name": "Chris"
+        },
+        {
+          "position": "9",
+          "highScore": "20",
+          "name": "Chris"
+        }
+      ]      
+}

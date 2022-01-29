@@ -88,5 +88,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63996108d4c3ef74abc67964434b564d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endMultiplier: 10
-  levelMultiplier: 4
+  maxModifier: 30
+  inverted: 0

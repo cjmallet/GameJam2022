@@ -9,6 +9,7 @@ using UnityEngine.Tilemaps;
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] private int maxModifier;
+    [HideInInspector] public string playerName;
     [HideInInspector] public bool inverted;
 
     private GameObject normalGround;
@@ -16,20 +17,35 @@ public class LevelManager : MonoBehaviour
     private GameObject ground;
     private GameObject levelUI;
     private GameObject endLevelUI;
-    private static string levelPrefix="Level_";
+    private GameObject openInput;
+    private Highscores levelHighscores;
+    private bool inputMenuOpen;
+    private static string levelPrefix = "Level_";
     private float timer;
     private int score;
+    private int finalScore;
 
     // Start is called before the first frame update
     void Start()
     {
-        ground=GameObject.Find("Ground");
+        ground = GameObject.Find("Ground");
         levelUI = GameObject.Find("InGameUI");
         levelUI.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Score: " + score;
         endLevelUI = GameObject.Find("EndLevelUI");
         endLevelUI.SetActive(false);
         inverseGround = ground.transform.GetChild(1).gameObject;
         normalGround = ground.transform.GetChild(2).gameObject;
+
+        //System.IO.File.Delete(Application.persistentDataPath + "/" + SceneManager.GetActiveScene().name + ".json");
+        if (System.IO.File.Exists(Application.persistentDataPath + "/" + SceneManager.GetActiveScene().name + ".json"))
+        {
+            levelHighscores = JsonUtility.FromJson<Highscores>(System.IO.File.ReadAllText(Application.persistentDataPath + "/" + SceneManager.GetActiveScene().name + ".json"));
+            foreach (Highscore highscore in levelHighscores.allHighScores)
+            {
+                Debug.Log(highscore.name+"Name " + highscore.position +"position"+ highscore.highScore);
+            }
+        }
+       
         score = 0;
         timer = 0;
     }
@@ -43,7 +59,7 @@ public class LevelManager : MonoBehaviour
 
     public void SwitchInversion(bool inversion)
     {
-        inverted=inversion;
+        inverted = inversion;
         inverseGround.GetComponent<TilemapCollider2D>().enabled = inversion;
         inverseGround.GetComponent<TilemapRenderer>().enabled = inversion;
         normalGround.GetComponent<TilemapCollider2D>().enabled = !inversion;
@@ -57,21 +73,133 @@ public class LevelManager : MonoBehaviour
         levelUI.SetActive(false);
 
         double multiplier = Math.Round((double)maxModifier / Mathf.RoundToInt(timer), 1);
-        if (multiplier<1)
+        if (multiplier < 1)
         {
             multiplier = 1;
         }
-        
+
+        finalScore = Mathf.RoundToInt(score * (float)multiplier);
+
+        if (levelHighscores!=null)
+        {
+            LoadHighscores();
+        }
+        else
+        {
+            UploadHighscore(1);
+        }
+
         endLevelUI.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "Score: " + score;
-        endLevelUI.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = "Time Multiplier: " +multiplier;
-        endLevelUI.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = "Total Score: " + (Mathf.RoundToInt(score * (float)multiplier)).ToString();
+        endLevelUI.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = "Time Multiplier: " + multiplier;
+        endLevelUI.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = "Total Score: " + finalScore.ToString();
+        List<GameObject> highscoreObjects = new List<GameObject>();
+
+        for (int x=0; x< endLevelUI.transform.GetChild(5).childCount;x++)
+        {
+            Transform child = endLevelUI.transform.GetChild(5).GetChild(x);
+            child.GetChild(0).GetComponent<TextMeshProUGUI>().text = levelHighscores.allHighScores[x].position.ToString();
+            child.GetChild(1).GetComponent<TextMeshProUGUI>().text = levelHighscores.allHighScores[x].name;
+            child.GetChild(2).GetComponent<TextMeshProUGUI>().text = levelHighscores.allHighScores[x].highScore.ToString();
+        }
+
+        SaveHighscore();
+    }
+
+    public void SaveHighscore()
+    {
+        string jsonHighscore = JsonUtility.ToJson(levelHighscores);
+        if (System.IO.File.Exists(Application.persistentDataPath + "/" + SceneManager.GetActiveScene().name + ".json"))
+        {
+            System.IO.File.Delete(Application.persistentDataPath + "/" + SceneManager.GetActiveScene().name + ".json");
+        }
+        System.IO.File.WriteAllText(Application.persistentDataPath + "/" + SceneManager.GetActiveScene().name + ".json", jsonHighscore);
+    }
+
+    private void LoadHighscores()
+    {
+        bool highscoreReached = false;
+
+        foreach (Highscore highscore in levelHighscores.allHighScores)
+        {
+            if (finalScore>highscore.highScore)
+            {
+                ChangeHighscore(highscore.position);
+                highscoreReached = true;
+                break;
+            }
+            else
+            {
+                highscoreReached = false;
+            }
+        }
+
+        if (levelHighscores.allHighScores.Length < 10&&!highscoreReached)
+        {
+            UploadHighscore(levelHighscores.allHighScores.Length - 1);
+        }
+    }
+
+    private void UploadHighscore(int position)
+    {
+        Highscore highscore = CreateHighscore(position);
+
+        if (position==1&& levelHighscores==null)
+        {
+            levelHighscores = new Highscores();
+            levelHighscores.allHighScores = new Highscore[10];
+            for (int x = position;x<=10;x++)
+            {
+                Highscore score = new Highscore();
+                score.position =x;
+
+                levelHighscores.allHighScores[x-1] = score;
+                Debug.Log(score.position);
+            }
+        }
+
+        levelHighscores.allHighScores[position - 1] = highscore;
+    }
+
+    private void ChangeHighscore(int position)
+    {
+        Highscore highscore = CreateHighscore(position);
+
+        Highscore oldHighscore = levelHighscores.allHighScores[position-1];
+        oldHighscore.position++;
+        levelHighscores.allHighScores[position-1] = highscore;
+        position++;
+
+        for (int x=position;x<=10;x++)
+        {
+            highscore = levelHighscores.allHighScores[x - 1];
+            levelHighscores.allHighScores[x - 1]=oldHighscore;
+            oldHighscore = highscore;
+            oldHighscore.position++;
+        }
+    }
+
+    private Highscore CreateHighscore(int position)
+    {
+        Highscore highscore = new Highscore();
+        highscore.position = position;
+        highscore.name = playerName;
+        highscore.highScore = finalScore;
+
+        return highscore;
+    }
+
+    private void StartInput(int position)
+    {
+        GameObject nameInput= endLevelUI.transform.GetChild(5).GetChild(position - 1).GetChild(1).gameObject;
+        nameInput.SetActive(true);
+        nameInput.GetComponent<TMP_InputField>();
     }
 
     public void LoadNextLevel()
     {
         string currentName = SceneManager.GetActiveScene().name;
-        int currentLevel = Int32.Parse(currentName.Remove(0,6));
-        SceneManager.LoadScene(levelPrefix+(currentLevel+1));
+        int currentLevel = Int32.Parse(currentName.Remove(0, 6));
+        SceneManager.LoadScene(levelPrefix + (currentLevel + 1));
         Time.timeScale = 1;
     }
 
@@ -90,5 +218,19 @@ public class LevelManager : MonoBehaviour
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    [Serializable]
+    public class Highscores
+    {
+        public Highscore[] allHighScores;
+    }
+
+    [Serializable]
+    public class Highscore
+    {
+        public int position;
+        public int highScore;
+        public string name;
     }
 }

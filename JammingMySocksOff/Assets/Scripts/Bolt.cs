@@ -26,7 +26,6 @@ public class Bolt : Pickups
 
         if (collision.transform.tag == "Player")
         {
-            GameManager.Instance.levelManager.AddScore(scoreBonus);
             StartCoroutine("StartCollection");
         }
     }
@@ -37,6 +36,7 @@ public class Bolt : Pickups
         {
             GetComponent<ParticleSystem>().Stop();
         }
+
         GetComponent<BoxCollider2D>().enabled=false;
         GetComponent<SpriteRenderer>().enabled = false;
         GameManager.Instance.levelManager.AddScore(scoreBonus);
