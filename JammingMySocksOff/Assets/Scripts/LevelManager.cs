@@ -9,7 +9,7 @@ using UnityEngine.Tilemaps;
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] private int maxModifier;
-    [HideInInspector] public string playerName;
+    [SerializeField] private TextMeshProUGUI inputFieldText;
     [HideInInspector] public bool inverted;
 
     private GameObject normalGround;
@@ -17,11 +17,15 @@ public class LevelManager : MonoBehaviour
     private GameObject ground;
     private GameObject levelUI;
     private GameObject endLevelUI;
+    private GameObject nameUI;
     private GameObject openInput;
     private Highscores levelHighscores;
     private bool inputMenuOpen;
     private static string levelPrefix = "Level_";
+    private double multiplier;
+    private string playerName;
     private float timer;
+    private int lastModifiedPosition;
     private int score;
     private int finalScore;
 
@@ -33,6 +37,8 @@ public class LevelManager : MonoBehaviour
         levelUI.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Score: " + score;
         endLevelUI = GameObject.Find("EndLevelUI");
         endLevelUI.SetActive(false);
+        nameUI = GameObject.Find("NameInput");
+        nameUI.SetActive(false);
         inverseGround = ground.transform.GetChild(1).gameObject;
         normalGround = ground.transform.GetChild(2).gameObject;
 
@@ -69,10 +75,10 @@ public class LevelManager : MonoBehaviour
     public void CompleteLevel()
     {
         Time.timeScale = 0;
-        endLevelUI.SetActive(true);
+        
         levelUI.SetActive(false);
 
-        double multiplier = Math.Round((double)maxModifier / Mathf.RoundToInt(timer), 1);
+        multiplier = Math.Round((double)maxModifier / Mathf.RoundToInt(timer), 1);
         if (multiplier < 1)
         {
             multiplier = 1;
@@ -88,21 +94,7 @@ public class LevelManager : MonoBehaviour
         {
             UploadHighscore(1);
         }
-
-        endLevelUI.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "Score: " + score;
-        endLevelUI.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = "Time Multiplier: " + multiplier;
-        endLevelUI.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = "Total Score: " + finalScore.ToString();
-        List<GameObject> highscoreObjects = new List<GameObject>();
-
-        for (int x=0; x< endLevelUI.transform.GetChild(5).childCount;x++)
-        {
-            Transform child = endLevelUI.transform.GetChild(5).GetChild(x);
-            child.GetChild(0).GetComponent<TextMeshProUGUI>().text = levelHighscores.allHighScores[x].position.ToString();
-            child.GetChild(1).GetComponent<TextMeshProUGUI>().text = levelHighscores.allHighScores[x].name;
-            child.GetChild(2).GetComponent<TextMeshProUGUI>().text = levelHighscores.allHighScores[x].highScore.ToString();
-        }
-
-        SaveHighscore();
+        nameUI.SetActive(true);
     }
 
     public void SaveHighscore()
@@ -113,6 +105,22 @@ public class LevelManager : MonoBehaviour
             System.IO.File.Delete(Application.persistentDataPath + "/" + SceneManager.GetActiveScene().name + ".json");
         }
         System.IO.File.WriteAllText(Application.persistentDataPath + "/" + SceneManager.GetActiveScene().name + ".json", jsonHighscore);
+
+        endLevelUI.SetActive(true);
+        nameUI.SetActive(false);
+
+        endLevelUI.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "Score: " + score;
+        endLevelUI.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = "Time Multiplier: " + multiplier;
+        endLevelUI.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = "Total Score: " + finalScore.ToString();
+        List<GameObject> highscoreObjects = new List<GameObject>();
+
+        for (int x = 0; x < endLevelUI.transform.GetChild(5).childCount; x++)
+        {
+            Transform child = endLevelUI.transform.GetChild(5).GetChild(x);
+            child.GetChild(0).GetComponent<TextMeshProUGUI>().text = levelHighscores.allHighScores[x].position.ToString();
+            child.GetChild(1).GetComponent<TextMeshProUGUI>().text = levelHighscores.allHighScores[x].name;
+            child.GetChild(2).GetComponent<TextMeshProUGUI>().text = levelHighscores.allHighScores[x].highScore.ToString();
+        }
     }
 
     private void LoadHighscores()
@@ -153,7 +161,6 @@ public class LevelManager : MonoBehaviour
                 score.position =x;
 
                 levelHighscores.allHighScores[x-1] = score;
-                Debug.Log(score.position);
             }
         }
 
@@ -178,21 +185,22 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    public void GetPlayerName()
+    {
+        playerName = inputFieldText.text;
+        levelHighscores.allHighScores[lastModifiedPosition].name = playerName;
+        SaveHighscore();
+    }
+
     private Highscore CreateHighscore(int position)
     {
         Highscore highscore = new Highscore();
         highscore.position = position;
         highscore.name = playerName;
         highscore.highScore = finalScore;
+        lastModifiedPosition = position - 1;
 
         return highscore;
-    }
-
-    private void StartInput(int position)
-    {
-        GameObject nameInput= endLevelUI.transform.GetChild(5).GetChild(position - 1).GetChild(1).gameObject;
-        nameInput.SetActive(true);
-        nameInput.GetComponent<TMP_InputField>();
     }
 
     public void LoadNextLevel()

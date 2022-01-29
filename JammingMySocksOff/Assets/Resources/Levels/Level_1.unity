@@ -180,6 +180,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b65a9ff125b765b4a927ad6e0269b3f7, type: 3}
+--- !u!114 &213803824 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2668999981370174841, guid: d103cad683d5383489e0a7999ed54d4a, type: 3}
+  m_PrefabInstance: {fileID: 2684524295832092382}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!213 &398268297
 Sprite:
   m_ObjectHideFlags: 0
@@ -20187,14 +20198,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1089176758}
-    - target: {fileID: 1798052385717168966, guid: d103cad683d5383489e0a7999ed54d4a, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadSpecificLevel
-      objectReference: {fileID: 0}
-    - target: {fileID: 1798052385717168966, guid: d103cad683d5383489e0a7999ed54d4a, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: SaveHighscore
-      objectReference: {fileID: 0}
     - target: {fileID: 1810491866936595636, guid: d103cad683d5383489e0a7999ed54d4a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -20203,14 +20206,18 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1089176758}
-    - target: {fileID: 1810491866936595636, guid: d103cad683d5383489e0a7999ed54d4a, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadNextLevel
+    - target: {fileID: 2299608730171570393, guid: d103cad683d5383489e0a7999ed54d4a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1810491866936595636, guid: d103cad683d5383489e0a7999ed54d4a, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: SaveHighscore
-      objectReference: {fileID: 0}
+    - target: {fileID: 2299608730171570393, guid: d103cad683d5383489e0a7999ed54d4a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1089176758}
+    - target: {fileID: 2299608730171570393, guid: d103cad683d5383489e0a7999ed54d4a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1089176758}
     - target: {fileID: 2684524295425850454, guid: d103cad683d5383489e0a7999ed54d4a, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -20417,5 +20424,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8626594371121366991, guid: 4c42a5716a4895d48a1c59a9190ca116, type: 3}
+      propertyPath: inputFieldText
+      value: 
+      objectReference: {fileID: 213803824}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c42a5716a4895d48a1c59a9190ca116, type: 3}
