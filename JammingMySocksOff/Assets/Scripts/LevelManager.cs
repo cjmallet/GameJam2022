@@ -12,6 +12,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI inputFieldText;
     [HideInInspector] public bool inverted;
     [HideInInspector] public bool nameUIopen;
+    [HideInInspector] public bool paused;
 
     private GameObject normalGround;
     private GameObject inverseGround;
@@ -20,6 +21,7 @@ public class LevelManager : MonoBehaviour
     private GameObject endLevelUI;
     private GameObject nameUI;
     private GameObject openInput;
+    private GameObject escMenu;
     private Highscores levelHighscores;
     private bool inputMenuOpen;
     private static string levelPrefix = "Level_";
@@ -42,6 +44,8 @@ public class LevelManager : MonoBehaviour
         nameUI.SetActive(false);
         inverseGround = ground.transform.GetChild(1).gameObject;
         normalGround = ground.transform.GetChild(2).gameObject;
+        escMenu = GameObject.Find("EscapeMenu");
+        escMenu.SetActive(false);
         SwitchInversion(false);
 
         //System.IO.File.Delete(Application.persistentDataPath + "/" + SceneManager.GetActiveScene().name + ".json");
@@ -59,6 +63,11 @@ public class LevelManager : MonoBehaviour
     {
         timer += Time.deltaTime;
         levelUI.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Time: " + Mathf.RoundToInt(timer);
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseLevel(!paused);
+        }
     }
 
     public void SwitchInversion(bool inversion)
@@ -221,8 +230,23 @@ public class LevelManager : MonoBehaviour
 
     public void LoadSpecificLevel(string sceneName)
     {
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene(sceneName);
         Time.timeScale = 1;
+    }
+
+    public void PauseLevel(bool isPaused)
+    {
+        paused = isPaused;
+        if (isPaused)
+        {
+            Time.timeScale = 0;
+            escMenu.SetActive(true);
+        }
+        else
+        {
+            Time.timeScale = 1;
+            escMenu.SetActive(false);
+        }
     }
 
     public void AddScore(int gain)
@@ -233,6 +257,7 @@ public class LevelManager : MonoBehaviour
 
     public void Restart()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
