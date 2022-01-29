@@ -54,6 +54,14 @@ public class playerController : MonoBehaviour
             groundedTimer = 0;
         }
 
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            if (rb.velocity.y>0)
+            {
+                rb.velocity =new Vector2(rb.velocity.x,rb.velocity.y/2);
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.E)&&!GameManager.Instance.levelManager.nameUIopen)
         {
             if (!inverted)
