@@ -9,6 +9,7 @@ using UnityEngine.Tilemaps;
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] private int maxModifier;
+    [HideInInspector] public bool inverted;
 
     private GameObject normalGround;
     private GameObject inverseGround;
@@ -42,6 +43,7 @@ public class LevelManager : MonoBehaviour
 
     public void SwitchInversion(bool inversion)
     {
+        inverted=inversion;
         inverseGround.GetComponent<TilemapCollider2D>().enabled = inversion;
         inverseGround.GetComponent<TilemapRenderer>().enabled = inversion;
         normalGround.GetComponent<TilemapCollider2D>().enabled = !inversion;
@@ -82,12 +84,6 @@ public class LevelManager : MonoBehaviour
     public void AddScore(int gain)
     {
         score += gain;
-        levelUI.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Score: " + score;
-    }
-
-    public void LowerScore(int loss)
-    {
-        score -= loss;
         levelUI.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Score: " + score;
     }
 

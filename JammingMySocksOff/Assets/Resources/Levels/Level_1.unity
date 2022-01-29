@@ -2066,6 +2066,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ground
       objectReference: {fileID: 0}
+    - target: {fileID: 2518573975241909904, guid: c836413e9a475bf4480c8194703fdc5c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2518573976232054849, guid: c836413e9a475bf4480c8194703fdc5c, type: 3}
       propertyPath: m_CompositePaths.m_Paths.Array.size
       value: 2
@@ -20288,6 +20292,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5933599943161729648, guid: 27fe2037332788c4ea841aa994034ca6, type: 3}
+      propertyPath: startInverted
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5933599943161729649, guid: 27fe2037332788c4ea841aa994034ca6, type: 3}
       propertyPath: m_Name
       value: GoldBolt
