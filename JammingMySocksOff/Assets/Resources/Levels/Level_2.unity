@@ -27555,6 +27555,18 @@ PrefabInstance:
       propertyPath: groundCheckRange
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 1470582116995706495, guid: 64123d90ba0a03747bbe4da29559cfab, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1470582116995706495, guid: 64123d90ba0a03747bbe4da29559cfab, type: 3}
+      propertyPath: m_SleepingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1470582116995706495, guid: 64123d90ba0a03747bbe4da29559cfab, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 64123d90ba0a03747bbe4da29559cfab, type: 3}
 --- !u!4 &478787851 stripped
