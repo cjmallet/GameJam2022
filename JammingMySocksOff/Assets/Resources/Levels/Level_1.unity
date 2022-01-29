@@ -1581,6 +1581,14 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 1373742478085072086, guid: 70fba23a05e4441428f0f6925668be22, type: 3}
+      propertyPath: m_ScreenMatchMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1373742478085072086, guid: 70fba23a05e4441428f0f6925668be22, type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1373742478085072104, guid: 70fba23a05e4441428f0f6925668be22, type: 3}
       propertyPath: m_Name
       value: EscapeMenu
