@@ -11,6 +11,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private int maxModifier;
     [SerializeField] private TextMeshProUGUI inputFieldText;
     [HideInInspector] public bool inverted;
+    [HideInInspector] public bool nameUIopen;
 
     private GameObject normalGround;
     private GameObject inverseGround;
@@ -47,10 +48,6 @@ public class LevelManager : MonoBehaviour
         if (System.IO.File.Exists(Application.persistentDataPath + "/" + SceneManager.GetActiveScene().name + ".json"))
         {
             levelHighscores = JsonUtility.FromJson<Highscores>(System.IO.File.ReadAllText(Application.persistentDataPath + "/" + SceneManager.GetActiveScene().name + ".json"));
-            foreach (Highscore highscore in levelHighscores.allHighScores)
-            {
-                Debug.Log(highscore.name+"Name " + highscore.position +"position"+ highscore.highScore);
-            }
         }
        
         score = 0;
@@ -94,8 +91,9 @@ public class LevelManager : MonoBehaviour
         else
         {
             UploadHighscore(1);
+            endLevelUI.SetActive(false);
+            nameUI.SetActive(true);
         }
-        nameUI.SetActive(true);
     }
 
     public void SaveHighscore()
@@ -134,6 +132,8 @@ public class LevelManager : MonoBehaviour
             {
                 ChangeHighscore(highscore.position);
                 highscoreReached = true;
+                endLevelUI.SetActive(false);
+                nameUI.SetActive(true);
                 break;
             }
             else
@@ -145,6 +145,13 @@ public class LevelManager : MonoBehaviour
         if (levelHighscores.allHighScores.Length < 10&&!highscoreReached)
         {
             UploadHighscore(levelHighscores.allHighScores.Length - 1);
+            endLevelUI.SetActive(false);
+            nameUI.SetActive(true);
+        }
+        if(levelHighscores.allHighScores.Length==10 &&!highscoreReached)
+        {
+            Debug.Log("NoHighscore");
+            SaveHighscore();
         }
     }
 

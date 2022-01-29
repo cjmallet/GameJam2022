@@ -16,7 +16,8 @@ public class playerController : MonoBehaviour
     private Rigidbody2D rb;
     private bool grounded, moving, lookingLeft,inverted;
     private Color backGroundColor,invertedBackgroundColor;
-    private float timer;
+    private float jumpTimer,groundedTimer;
+    private int jumpTimes;
 
     // Start is called before the first frame update
     void Start()
@@ -31,22 +32,29 @@ public class playerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        groundedTimer -= Time.deltaTime;
+        jumpTimer -= Time.deltaTime;
+
+        if (grounded && !Physics2D.OverlapCircle(groundCheck.position, groundCheckRange, groundLayer))
+        {
+            groundedTimer = 0.1f;
+        }
+        grounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRange, groundLayer);
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (grounded)
-            {
-                rb.AddForce(new Vector2(0, jumpHeight));
-                timer = 0;
-            }
-            /*else if (!grounded && timer<jumpTime)
-            {
-                Debug.Log("Reached");
-                timer += Time.deltaTime;
-                rb.AddForce(new Vector2(0, jumpHeight/1000));
-            }*/
+            jumpTimer = 0.1f;
+        }
+        
+        if (jumpTimer > 0 && (groundedTimer>0||grounded))
+        {
+            rb.velocity=new Vector2(rb.velocity.x,0);
+            rb.AddForce(new Vector2(0, jumpHeight));
+            jumpTimer = 0;
+            groundedTimer = 0;
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E)&&!GameManager.Instance.levelManager.nameUIopen)
         {
             if (!inverted)
             {
@@ -67,8 +75,6 @@ public class playerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        grounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRange, groundLayer);
-
         moveInput = Input.GetAxis("Horizontal");
         if (moveInput == 0)
         {
