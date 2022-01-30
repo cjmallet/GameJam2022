@@ -117,14 +117,14 @@ public class LevelManager : MonoBehaviour
         endLevelUI.SetActive(true);
         nameUI.SetActive(false);
 
-        endLevelUI.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "Score: " + score;
-        endLevelUI.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = "Time Multiplier: " + multiplier;
-        endLevelUI.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = "Total Score: " + finalScore.ToString();
+        endLevelUI.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Score: " + score;
+        endLevelUI.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "Time Multiplier: " + multiplier;
+        endLevelUI.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = "Total Score: " + finalScore.ToString();
         List<GameObject> highscoreObjects = new List<GameObject>();
 
-        for (int x = 0; x < endLevelUI.transform.GetChild(5).childCount; x++)
+        for (int x = 0; x < endLevelUI.transform.GetChild(4).childCount; x++)
         {
-            Transform child = endLevelUI.transform.GetChild(5).GetChild(x);
+            Transform child = endLevelUI.transform.GetChild(4).GetChild(x);
             child.GetChild(0).GetComponent<TextMeshProUGUI>().text = levelHighscores.allHighScores[x].position.ToString();
             child.GetChild(1).GetComponent<TextMeshProUGUI>().text = levelHighscores.allHighScores[x].name;
             child.GetChild(2).GetComponent<TextMeshProUGUI>().text = levelHighscores.allHighScores[x].highScore.ToString();
