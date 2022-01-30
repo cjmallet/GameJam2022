@@ -37,7 +37,7 @@ public class LevelManager : MonoBehaviour
     {
         ground = GameObject.Find("Ground");
         levelUI = GameObject.Find("InGameUI");
-        levelUI.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Score: " + score;
+        levelUI.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = score.ToString();
         endLevelUI = GameObject.Find("EndLevelUI");
         endLevelUI.SetActive(false);
         nameUI = GameObject.Find("NameInput");
@@ -252,7 +252,7 @@ public class LevelManager : MonoBehaviour
     public void AddScore(int gain)
     {
         score += gain;
-        levelUI.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Score: " + score;
+        levelUI.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = score.ToString();
     }
 
     public void Restart()
