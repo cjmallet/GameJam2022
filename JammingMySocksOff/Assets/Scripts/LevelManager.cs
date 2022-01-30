@@ -159,7 +159,6 @@ public class LevelManager : MonoBehaviour
         }
         if(levelHighscores.allHighScores.Length==10 &&!highscoreReached)
         {
-            Debug.Log("NoHighscore");
             SaveHighscore();
         }
     }
