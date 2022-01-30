@@ -53,7 +53,8 @@ public class LevelManager : MonoBehaviour
         {
             levelHighscores = JsonUtility.FromJson<Highscores>(System.IO.File.ReadAllText(Application.persistentDataPath + "/" + SceneManager.GetActiveScene().name + ".json"));
         }
-       
+
+        Shader.SetGlobalFloat("_InvertColors", 0);
         score = 0;
         timer = 0;
     }

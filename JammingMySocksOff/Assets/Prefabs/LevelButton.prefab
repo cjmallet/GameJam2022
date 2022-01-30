@@ -132,7 +132,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Level_1
+          m_StringArgument: Level_4
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &7846526924114136256
@@ -181,8 +181,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 3.3399963, y: -144}
-  m_SizeDelta: {x: -104.16, y: -433}
+  m_AnchoredPosition: {x: 3.3399963, y: -146}
+  m_SizeDelta: {x: -91.72, y: -433}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7846526924657428823
 CanvasRenderer:
@@ -212,7 +212,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Level 1
+  m_text: Level 4
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b51bc65ab52e13f44a2443eb8e290bde, type: 2}
   m_sharedMaterial: {fileID: -2307337802702978368, guid: b51bc65ab52e13f44a2443eb8e290bde, type: 2}
@@ -346,7 +346,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e6e31331afc5a5b40bbf77e5efb339a9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d33f969e280da0546a7a530495821e62, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

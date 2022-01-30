@@ -40,10 +40,15 @@ public class MusicManager : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name!=sceneName &&!SceneManager.GetActiveScene().name.Contains("MainMenu"))
         {
-            GetComponent<AudioSource>().Stop();
-            GetComponent<AudioSource>().clip= levelMusic[Random.Range(0,2)];
-            GetComponent<AudioSource>().Play();
-            sceneName = SceneManager.GetActiveScene().name;
+            AudioClip newClip= levelMusic[Random.Range(0, 2)];
+
+            if (newClip.name != GetComponent<AudioSource>().clip.name)
+            {
+                GetComponent<AudioSource>().Stop();
+                GetComponent<AudioSource>().clip = newClip;
+                GetComponent<AudioSource>().Play();
+                sceneName = SceneManager.GetActiveScene().name;
+            }            
         }
 
         if (SceneManager.GetActiveScene().name != sceneName && SceneManager.GetActiveScene().name.Contains("MainMenu"))
